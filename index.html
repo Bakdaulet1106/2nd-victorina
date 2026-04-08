@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Конституциялық реформа 2026 | Флип-карточка навигациясы</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle at 10% 30%, #0b2b35, #04161f);
+            font-family: 'Poppins', 'Segoe UI', 'Montserrat', system-ui, -apple-system, 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem;
+        }
+
+        /* негізгі контейнер */
+        .quiz-single {
+            max-width: 650px;
+            width: 100%;
+            background: rgba(255,248,225,0.05);
+            backdrop-filter: blur(3px);
+            border-radius: 64px;
+            padding: 1.5rem 1.8rem 2rem;
+            box-shadow: 0 30px 45px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,200,0.1);
+            transition: all 0.2s;
+        }
+
+        /* тақырып және прогресс */
+        .header-area {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .header-area h1 {
+            font-size: 2rem;
+            background: linear-gradient(135deg, #FFE6B0, #FFB347, #F4A261);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.3px;
+            margin-bottom: 0.5rem;
+        }
+
+        .badge-date {
+            background: #00000055;
+            display: inline-block;
+            padding: 0.25rem 1.2rem;
+            border-radius: 60px;
+            font-size: 0.8rem;
+            color: #ffdeae;
+            font-weight: 500;
+            backdrop-filter: blur(4px);
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin: 1.2rem 0 0.8rem;
+            color: #edd7b0;
+            font-weight: 500;
+        }
+
+        .counter-text {
+            background: #1f3e44cc;
+            padding: 0.2rem 0.9rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+        }
+
+        .status-badge {
+            font-size: 0.8rem;
+            background: #f7b05e33;
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+        }
+
+        /* 3D карта айналмалы */
+        .flip-card-container {
+            perspective: 1800px;
+            margin: 1rem 0 1.8rem;
+            cursor: pointer;
+        }
+
+        .flip-card {
+            background: transparent;
+            width: 100%;
+            height: 400px;
+            position: relative;
+            transition: transform 0.2s;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.65s cubic-bezier(0.23, 1, 0.32, 1);
+            transform-style: preserve-3d;
+            border-radius: 42px;
+            box-shadow: 0 25px 35px -12px black;
+        }
+
+        .flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .front, .back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 42px;
+            padding: 2rem 1.6rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+        }
+
+        /* Алдыңғы бет - сұрақ */
+        .front {
+            background: linear-gradient(145deg, #fff8ed, #fff1df);
+            background-image: radial-gradient(circle at 0% 30%, rgba(255,180,70,0.1) 3%, transparent 3.5%);
+            background-size: 26px 26px;
+            border: 1px solid #fad494;
+            transform: rotateY(0deg);
+            color: #2c4b3e;
+        }
+
+        .front .icon-q {
+            font-size: 3.2rem;
+            background: #ffb85e30;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 60px;
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(4px);
+        }
+
+        .front h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #b45f1b;
+            border-left: 4px solid #f4a261;
+            padding-left: 0.8rem;
+            align-self: flex-start;
+            margin-bottom: 1rem;
+            width: 100%;
+        }
+
+        .front .question {
+            font-size: 1.45rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin: 0.8rem 0;
+            color: #2d4f3c;
+            text-align: center;
+            word-break: break-word;
+            flex: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        .front .tap-hint {
+            font-size: 0.75rem;
+            background: #f7e2c0;
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            color: #b1621a;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+
+        /* Артқы бет - жауап */
+        .back {
+            background: linear-gradient(125deg, #1d5b5f, #0c424b);
+            transform: rotateY(180deg);
+            color: #fff4e2;
+            border: 1px solid #ffbc6e;
+        }
+
+        .back .answer-icon {
+            font-size: 2rem;
+            margin-bottom: 0.8rem;
+            background: #00000030;
+            border-radius: 100px;
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .back .answer-title {
+            font-size: 1rem;
+            letter-spacing: 1px;
+            background: #f6b35240;
+            padding: 0.2rem 1.2rem;
+            border-radius: 60px;
+            margin-bottom: 1rem;
+        }
+
+        .back .answer-text {
+            font-size: 1.55rem;
+            font-weight: 700;
+            text-align: center;
+            line-height: 1.3;
+            margin: 0.8rem 0;
+            word-break: break-word;
+            background: rgba(0,0,0,0.25);
+            padding: 0.8rem;
+            border-radius: 28px;
+            width: 100%;
+        }
+
+        .back .flip-back-hint {
+            font-size: 0.7rem;
+            color: #ffdeae;
+            margin-top: 0.7rem;
+        }
+
+        /* навигация кнопкалары */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .nav-btn {
+            background: rgba(255, 200, 110, 0.9);
+            border: none;
+            padding: 0.8rem 1.8rem;
+            border-radius: 60px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.2s ease;
+            color: #2d3e2b;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            backdrop-filter: blur(2px);
+            flex: 1;
+            justify-content: center;
+        }
+
+        .nav-btn:active {
+            transform: scale(0.96);
+        }
+
+        .nav-btn:hover {
+            background: #ffbc6e;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+        }
+
+        .reset-btn {
+            background: #1f4e5c;
+            color: #ffddb0;
+            border: 1px solid #ffb469;
+        }
+
+        .reset-btn:hover {
+            background: #2e6b7c;
+        }
+
+        .action-row {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.4rem;
+        }
+
+        .action-btn {
+            flex: 1;
+            background: #00000066;
+            backdrop-filter: blur(5px);
+            border: 1px solid #ffc27a;
+            color: #ffeaC5;
+            padding: 0.6rem;
+            border-radius: 44px;
+            font-weight: 500;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .action-btn:hover {
+            background: #ffb34755;
+            color: white;
+        }
+
+        @media (max-width: 550px) {
+            .quiz-single {
+                padding: 1rem;
+            }
+            .flip-card {
+                height: 380px;
+            }
+            .front .question {
+                font-size: 1.2rem;
+            }
+            .back .answer-text {
+                font-size: 1.25rem;
+            }
+            .nav-btn {
+                padding: 0.5rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="quiz-single">
+    <div class="header-area">
+        <h1>🇰🇿 2026 Конституциялық реформа</h1>
+        <div class="badge-date">📅 Жаңа Конституция · 1 шілде 2026</div>
+        <div class="progress-info">
+            <span class="counter-text" id="currentIndexSpan">Карта 1 / 20</span>
+            <span class="status-badge" id="flipStatusSpan">🔒 Жабық</span>
+        </div>
+    </div>
+
+    <!-- 3D карта контейнері -->
+    <div class="flip-card-container" id="flipCardContainer">
+        <div class="flip-card" id="flipCard">
+            <div class="flip-card-inner">
+                <div class="front" id="frontSide">
+                    <div class="icon-q">📜❓</div>
+                    <h2>Сұрақ</h2>
+                    <div class="question" id="questionText">2026 жылғы Конституциялық реформа қалай қабылданды?</div>
+                    <div class="tap-hint">🖱️ Картаны түртіңіз → жауап</div>
+                </div>
+                <div class="back" id="backSide">
+                    <div class="answer-icon">✨🇰🇿✨</div>
+                    <div class="answer-title">ДҰРЫС ЖАУАП</div>
+                    <div class="answer-text" id="answerText">Референдум арқылы</div>
+                    <div class="flip-back-hint">🔁 Қайта басыңыз — сұраққа оралу</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Навигация және қосымша басқару -->
+    <div class="nav-buttons">
+        <button class="nav-btn" id="prevBtn">◀ АЛДЫҢҒЫ</button>
+        <button class="nav-btn" id="nextBtn">КЕЛЕСІ ▶</button>
+    </div>
+    <div class="action-row">
+        <button class="action-btn" id="resetFlipBtn">🔄 Картаны жабу</button>
+        <button class="action-btn" id="shuffleCardBtn">🎲 Кездейсоқ карта</button>
+    </div>
+    <div style="text-align: center; margin-top: 1.5rem; font-size: 0.7rem; color: #bdd4cf;">
+        💡 20 маңызды сұрақ | Әр картаны айналдыру үшін басыңыз
+    </div>
+</div>
+
+<script>
+    // ---------- ДЕРЕКТЕР (20 сұрақ-жауап) ----------
+    const quizData = [
+        { question: "2026 жылғы Конституциялық реформа қалай қабылданды?", answer: "Референдум арқылы" },
+        { question: "Референдум қашан өтті?", answer: "2026 жылғы 15 наурыз" },
+        { question: "Жаңа Конституция қашан күшіне енеді?", answer: "2026 жылғы 1 шілде" },
+        { question: "Жаңа Конституция неше бөлімнен тұрады?", answer: "11 бөлім" },
+        { question: "Неше баптан тұрады?", answer: "95 бап" },
+        { question: "Конституцияның қанша пайызы жаңартылды?", answer: "84%" },
+        { question: "Парламент жүйесінде қандай өзгеріс болды?", answer: "Бір палаталы жүйе енгізілді" },
+        { question: "Қандай жаңа лауазым енгізілді?", answer: "Вице-президент" },
+        { question: "Қандай жаңа орган құрылды?", answer: "Халық кеңесі" },
+        { question: "Конституция күні қай күнге ауыстырылды?", answer: "15 наурыз" },
+        { question: "Реформаның басты мақсаты қандай?", answer: "Демократияны күшейту, халықтың рөлін арттыру" },
+        { question: "Сот жүйесінде қандай өзгеріс болды?", answer: "Судьялардың тәуелсіздігі күшейтілді" },
+        { question: "Азаматтардың құқықтарына не өзгерді?", answer: "Құқықтары кеңейтілді" },
+        { question: "Конституциялық бақылау қалай өзгерді?", answer: "Конституциялық соттың рөлі күшейтілді" },
+        { question: "Мемлекеттік басқаруда қандай бағыт күшейтілді?", answer: "Әділеттілік пен ашықтық" },
+        { question: "Неліктен бір палаталы парламент енгізілді?", answer: "Заң қабылдау процесін жеңілдету үшін" },
+        { question: "Вице-президенттің негізгі рөлі қандай?", answer: "Президентке көмектесу және тұрақтылықты сақтау" },
+        { question: "«Халық кеңесінің» мақсаты қандай?", answer: "Халық пен билік арасындағы байланысты күшейту" },
+        { question: "Бұл реформа қандай басқару моделіне жақындатады?", answer: "Президенттік жүйені жаңғыртылған, демократиялық модельге" },
+        { question: "Бұл өзгерістер ел дамуына қалай әсер етеді?", answer: "Саяси тұрақтылықты нығайтады, халық сенімін арттырады" }
+    ];
+
+    // Ағымдағы индекс және картаның айналған күйі (flipped)
+    let currentIndex = 0;        // 0-ден бастап
+    let isFlipped = false;       // ағымдағы карта ашылған ба?
+
+    // DOM элементтері
+    const flipCardContainer = document.getElementById('flipCard');
+    const questionEl = document.getElementById('questionText');
+    const answerEl = document.getElementById('answerText');
+    const currentIndexSpan = document.getElementById('currentIndexSpan');
+    const flipStatusSpan = document.getElementById('flipStatusSpan');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const resetFlipBtn = document.getElementById('resetFlipBtn');
+    const shuffleCardBtn = document.getElementById('shuffleCardBtn');
+
+    // Жаңарту функциясы: картаның мәтінін және прогресс, статус белгісін жаңартады, бірақ айналдыру күйін сақтайды.
+    function updateCardContent() {
+        const data = quizData[currentIndex];
+        questionEl.innerText = data.question;
+        answerEl.innerText = data.answer;
+        // прогресс индекс
+        currentIndexSpan.innerText = `Карта ${currentIndex+1} / ${quizData.length}`;
+        // статус (ашық/жабық) жазбаша түрде өзгерту
+        if (isFlipped) {
+            flipStatusSpan.innerHTML = '🔓 АШЫЛҒАН (жауап)';
+            flipStatusSpan.style.background = "#f7b05e88";
+        } else {
+            flipStatusSpan.innerHTML = '🔒 ЖАБЫҚ (сұрақ)';
+            flipStatusSpan.style.background = "#1f3e44cc";
+        }
+    }
+
+    // Картаның физикалық күйін DOM-да көрсету (flip классын қосу/өшіру)
+    function applyFlipState() {
+        if (isFlipped) {
+            flipCardContainer.classList.add('flipped');
+        } else {
+            flipCardContainer.classList.remove('flipped');
+        }
+        // статус жазбасын жаңарту
+        if (isFlipped) {
+            flipStatusSpan.innerHTML = '🔓 АШЫЛҒАН (жауап)';
+            flipStatusSpan.style.background = "#f7b05e88";
+        } else {
+            flipStatusSpan.innerHTML = '🔒 ЖАБЫҚ (сұрақ)';
+            flipStatusSpan.style.background = "#1f3e44cc";
+        }
+    }
+
+    // Толық жаңарту (мәтін + күй)
+    function refreshCurrentCard() {
+        updateCardContent();
+        applyFlipState();
+    }
+
+    // Картаны айналдыру (toggle)
+    function toggleFlip() {
+        isFlipped = !isFlipped;
+        applyFlipState();
+        // Жеңіл діріл эффекті
+        const cardInner = document.querySelector('.flip-card-inner');
+        if(cardInner) {
+            cardInner.style.transform = isFlipped ? 'rotateY(180deg)' : '';
+        }
+    }
+
+    // Келесі картаға өту (егер соңғы болса, басына оралады)
+    function nextCard() {
+        // алдыңғы картаның flipped күйін "жабық" етіп бастаймыз (жаңа картаға өткенде әрқашан сұрақ көрінеді)
+        if (currentIndex + 1 < quizData.length) {
+            currentIndex++;
+        } else {
+            currentIndex = 0;   // цикл
+        }
+        isFlipped = false;   // әрбір ауысқанда карта жабық күйде (тек сұрақ)
+        refreshCurrentCard();
+        // қосымша визуалды серпіліс
+        animateCardTransition();
+    }
+
+    // Алдыңғы карта
+    function prevCard() {
+        if (currentIndex - 1 >= 0) {
+            currentIndex--;
+        } else {
+            currentIndex = quizData.length - 1;
+        }
+        isFlipped = false;
+        refreshCurrentCard();
+        animateCardTransition();
+    }
+
+    // Кездейсоқ карта
+    function randomCard() {
+        const newIndex = Math.floor(Math.random() * quizData.length);
+        if (newIndex === currentIndex) {
+            // егер бірдей болса да, бәрібір жаңартамыз, бірақ flipped-ты жабамыз
+            currentIndex = newIndex;
+        } else {
+            currentIndex = newIndex;
+        }
+        isFlipped = false;
+        refreshCurrentCard();
+        animateCardTransition(true);
+    }
+
+    // Картаны жабу (егер ашық болса ғана жабады)
+    function closeCard() {
+        if (isFlipped) {
+            isFlipped = false;
+            applyFlipState();
+            // кішкене анимациялық нәзіктік
+            const innerCard = document.querySelector('.flip-card-inner');
+            if(innerCard) innerCard.style.transform = '';
+        } else {
+            // егер жабық болса, ештеңе өзгермейді, бірақ хабарласудың қажеті жоқ
+            // опция: қысқаша эфект беру
+            const cardWrap = document.getElementById('flipCard');
+            if(cardWrap) {
+                cardWrap.style.transform = "scale(0.99)";
+                setTimeout(() => { if(cardWrap) cardWrap.style.transform = ""; }, 150);
+            }
+        }
+    }
+
+    // Карта ауысқандағы әсер
+    function animateCardTransition(isRandom = false) {
+        const container = document.querySelector('.flip-card');
+        if (container) {
+            container.style.transform = "scale(0.98)";
+            setTimeout(() => {
+                if (container) container.style.transform = "scale(1)";
+            }, 150);
+        }
+        if (isRandom) {
+            const badge = document.querySelector('.counter-text');
+            if(badge) {
+                badge.style.opacity = '0.7';
+                setTimeout(() => { if(badge) badge.style.opacity = '1'; }, 200);
+            }
+        }
+    }
+
+    // Картаны басу арқылы айналдыру (клик)
+    function onCardClick() {
+        toggleFlip();
+    }
+
+    // Инициализация және event listener
+    function init() {
+        refreshCurrentCard();
+        // карта клик
+        const cardElem = document.getElementById('flipCard');
+        if (cardElem) {
+            cardElem.addEventListener('click', onCardClick);
+        }
+        // кнопкалар
+        if (prevBtn) prevBtn.addEventListener('click', prevCard);
+        if (nextBtn) nextBtn.addEventListener('click', nextCard);
+        if (resetFlipBtn) resetFlipBtn.addEventListener('click', closeCard);
+        if (shuffleCardBtn) shuffleCardBtn.addEventListener('click', randomCard);
+        
+        // қосымша: пернелермен басқару (оңға/солға)
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') {
+                e.preventDefault();
+                nextCard();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                prevCard();
+            } else if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+                e.preventDefault();
+                toggleFlip();
+            }
+        });
+    }
+
+    // Бастау
+    init();
+</script>
+</body>
+</html>
