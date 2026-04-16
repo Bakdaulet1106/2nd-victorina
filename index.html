@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="kk">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Конституциялық реформа 2026 | Флип-карточка навигациясы</title>
+    <title>Brainy Bunch | Smart Riddles & Logic Puzzles</title>
     <style>
         * {
             margin: 0;
@@ -12,52 +12,77 @@
         }
 
         body {
-            background: radial-gradient(circle at 10% 30%, #0b2b35, #04161f);
-            font-family: 'Poppins', 'Segoe UI', 'Montserrat', system-ui, -apple-system, 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1e5f6e, #0f3b44);
+            font-family: 'Poppins', 'Segoe UI', 'Comic Neue', 'Fredoka One', system-ui, -apple-system, 'Inter', sans-serif;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 1.5rem;
+            position: relative;
         }
 
-        /* негізгі контейнер */
+        /* playful floating emojis */
+        body::before {
+            content: "🧠✨";
+            font-size: 110px;
+            position: absolute;
+            bottom: 5px;
+            left: 5px;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+        body::after {
+            content: "🔍💡";
+            font-size: 100px;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            opacity: 0.12;
+            pointer-events: none;
+        }
+
+        /* main card container — bright, candy-like */
         .quiz-single {
-            max-width: 650px;
+            max-width: 720px;
             width: 100%;
-            background: rgba(255,248,225,0.05);
-            backdrop-filter: blur(3px);
-            border-radius: 64px;
-            padding: 1.5rem 1.8rem 2rem;
-            box-shadow: 0 30px 45px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,200,0.1);
+            background: rgba(255, 248, 225, 0.96);
+            backdrop-filter: blur(2px);
+            border-radius: 70px;
+            padding: 1.8rem 2rem 2rem;
+            box-shadow: 0 30px 45px rgba(0, 0, 0, 0.3), 0 8px 20px rgba(0, 0, 0, 0.2), inset 0 1px 4px rgba(255, 245, 200, 0.9);
             transition: all 0.2s;
+            border: 3px solid #ffe3aa;
         }
 
-        /* тақырып және прогресс */
+        /* header with vibrant gradient */
         .header-area {
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 1.8rem;
         }
 
         .header-area h1 {
-            font-size: 2rem;
-            background: linear-gradient(135deg, #FFE6B0, #FFB347, #F4A261);
+            font-size: 2.3rem;
+            background: linear-gradient(125deg, #F9A825, #FF6F00, #D84315, #AD1457);
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
-            letter-spacing: -0.3px;
-            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+            margin-bottom: 0.3rem;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.05);
+            font-weight: 800;
         }
 
         .badge-date {
-            background: #00000055;
+            background: #ffdd99;
             display: inline-block;
-            padding: 0.25rem 1.2rem;
+            padding: 0.3rem 1.4rem;
             border-radius: 60px;
-            font-size: 0.8rem;
-            color: #ffdeae;
-            font-weight: 500;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #b1451a;
             backdrop-filter: blur(4px);
+            box-shadow: inset 0 -1px 0 #fff0c0, 0 4px 10px rgba(0,0,0,0.05);
         }
 
         .progress-info {
@@ -65,27 +90,33 @@
             justify-content: space-between;
             align-items: baseline;
             margin: 1.2rem 0 0.8rem;
-            color: #edd7b0;
-            font-weight: 500;
+            background: #ffefcf90;
+            padding: 0.4rem 1rem;
+            border-radius: 60px;
         }
 
         .counter-text {
-            background: #1f3e44cc;
-            padding: 0.2rem 0.9rem;
-            border-radius: 30px;
+            background: #ffa559;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
             font-size: 0.9rem;
+            font-weight: bold;
+            color: #2c2b1f;
+            box-shadow: inset 0 1px 0 #ffe0aa, 0 2px 6px rgba(0,0,0,0.1);
         }
 
         .status-badge {
             font-size: 0.8rem;
-            background: #f7b05e33;
-            padding: 0.2rem 0.8rem;
-            border-radius: 30px;
+            background: #ffcd87;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-weight: 600;
+            color: #a13e15;
         }
 
-        /* 3D карта айналмалы */
+        /* 3D flip card */
         .flip-card-container {
-            perspective: 1800px;
+            perspective: 2000px;
             margin: 1rem 0 1.8rem;
             cursor: pointer;
         }
@@ -93,9 +124,9 @@
         .flip-card {
             background: transparent;
             width: 100%;
-            height: 400px;
+            height: 420px;
             position: relative;
-            transition: transform 0.2s;
+            transition: transform 0.1s;
         }
 
         .flip-card-inner {
@@ -105,8 +136,8 @@
             text-align: center;
             transition: transform 0.65s cubic-bezier(0.23, 1, 0.32, 1);
             transform-style: preserve-3d;
-            border-radius: 42px;
-            box-shadow: 0 25px 35px -12px black;
+            border-radius: 56px;
+            box-shadow: 0 25px 35px -12px rgba(0,0,0,0.4), 0 0 0 3px #ffd99b;
         }
 
         .flipped .flip-card-inner {
@@ -118,8 +149,8 @@
             width: 100%;
             height: 100%;
             backface-visibility: hidden;
-            border-radius: 42px;
-            padding: 2rem 1.6rem;
+            border-radius: 56px;
+            padding: 2rem 1.8rem;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -127,181 +158,194 @@
             box-sizing: border-box;
         }
 
-        /* Алдыңғы бет - сұрақ */
+        /* front - sunny and warm */
         .front {
-            background: linear-gradient(145deg, #fff8ed, #fff1df);
-            background-image: radial-gradient(circle at 0% 30%, rgba(255,180,70,0.1) 3%, transparent 3.5%);
-            background-size: 26px 26px;
-            border: 1px solid #fad494;
+            background: linear-gradient(145deg, #FFF5E6, #FFEFDB);
+            background-image: radial-gradient(circle at 15% 25%, rgba(255, 190, 80, 0.2) 2%, transparent 2.5%);
+            background-size: 30px 30px;
+            border: 3px solid #ffcf82;
             transform: rotateY(0deg);
-            color: #2c4b3e;
+            color: #3e2c1c;
         }
 
         .front .icon-q {
-            font-size: 3.2rem;
-            background: #ffb85e30;
-            width: 80px;
-            height: 80px;
+            font-size: 3.6rem;
+            background: #ffddb0;
+            width: 95px;
+            height: 95px;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 60px;
-            margin-bottom: 1.5rem;
-            backdrop-filter: blur(4px);
+            margin-bottom: 1rem;
+            box-shadow: 0 10px 18px #ffbf7740;
         }
 
         .front h2 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #b45f1b;
-            border-left: 4px solid #f4a261;
-            padding-left: 0.8rem;
+            font-size: 1.7rem;
+            font-weight: 800;
+            color: #e2711a;
+            border-left: 6px solid #f39c12;
+            padding-left: 1rem;
             align-self: flex-start;
             margin-bottom: 1rem;
             width: 100%;
         }
 
         .front .question {
-            font-size: 1.45rem;
-            font-weight: 600;
+            font-size: 1.55rem;
+            font-weight: 700;
             line-height: 1.4;
-            margin: 0.8rem 0;
-            color: #2d4f3c;
+            margin: 0.5rem 0;
+            color: #2c5a4b;
             text-align: center;
             word-break: break-word;
             flex: 1;
             display: flex;
             align-items: center;
+            justify-content: center;
+            background: #fff6ea;
+            padding: 1rem;
+            border-radius: 44px;
+            width: 100%;
         }
 
         .front .tap-hint {
             font-size: 0.75rem;
-            background: #f7e2c0;
-            padding: 0.3rem 1rem;
+            background: #ffd9ac;
+            padding: 0.4rem 1.2rem;
             border-radius: 50px;
-            color: #b1621a;
-            font-weight: 600;
-            margin-top: 1rem;
+            color: #bd5f1a;
+            font-weight: 700;
+            margin-top: 0.8rem;
         }
 
-        /* Артқы бет - жауап */
+        /* back side — vibrant ocean / berry */
         .back {
-            background: linear-gradient(125deg, #1d5b5f, #0c424b);
+            background: linear-gradient(135deg, #368f9b, #1b5f68);
             transform: rotateY(180deg);
-            color: #fff4e2;
-            border: 1px solid #ffbc6e;
+            color: #fffae9;
+            border: 3px solid #ffc27a;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
         }
 
         .back .answer-icon {
-            font-size: 2rem;
-            margin-bottom: 0.8rem;
-            background: #00000030;
+            font-size: 2.5rem;
+            margin-bottom: 0.7rem;
+            background: #ffb95e60;
             border-radius: 100px;
-            width: 70px;
-            height: 70px;
+            width: 85px;
+            height: 85px;
             display: flex;
             align-items: center;
             justify-content: center;
+            backdrop-filter: blur(4px);
         }
 
         .back .answer-title {
             font-size: 1rem;
             letter-spacing: 1px;
-            background: #f6b35240;
-            padding: 0.2rem 1.2rem;
+            background: #f7c27a;
+            padding: 0.3rem 1.5rem;
             border-radius: 60px;
             margin-bottom: 1rem;
+            color: #2f4028;
+            font-weight: bold;
         }
 
         .back .answer-text {
-            font-size: 1.55rem;
-            font-weight: 700;
+            font-size: 1.75rem;
+            font-weight: 800;
             text-align: center;
             line-height: 1.3;
-            margin: 0.8rem 0;
+            margin: 0.5rem 0;
             word-break: break-word;
-            background: rgba(0,0,0,0.25);
-            padding: 0.8rem;
-            border-radius: 28px;
+            background: rgba(0, 0, 0, 0.25);
+            padding: 0.9rem;
+            border-radius: 36px;
             width: 100%;
+            letter-spacing: 1px;
         }
 
         .back .flip-back-hint {
             font-size: 0.7rem;
-            color: #ffdeae;
-            margin-top: 0.7rem;
+            color: #fff0cb;
+            margin-top: 0.6rem;
         }
 
-        /* навигация кнопкалары */
+        /* navigation buttons — playful and punchy */
         .nav-buttons {
             display: flex;
             justify-content: space-between;
             gap: 1rem;
-            margin-top: 0.5rem;
+            margin-top: 0.2rem;
         }
 
         .nav-btn {
-            background: rgba(255, 200, 110, 0.9);
+            background: #f5ac42;
             border: none;
             padding: 0.8rem 1.8rem;
-            border-radius: 60px;
+            border-radius: 50px;
             font-weight: bold;
             font-size: 1rem;
             cursor: pointer;
             font-family: inherit;
             transition: all 0.2s ease;
-            color: #2d3e2b;
+            color: #2c2b26;
             display: flex;
             align-items: center;
             gap: 8px;
-            backdrop-filter: blur(2px);
             flex: 1;
             justify-content: center;
+            box-shadow: 0 6px 0 #b45f1b;
         }
 
         .nav-btn:active {
-            transform: scale(0.96);
+            transform: translateY(2px);
+            box-shadow: 0 3px 0 #b45f1b;
         }
 
         .nav-btn:hover {
-            background: #ffbc6e;
-            box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+            background: #ffbc62;
+            transform: scale(0.97);
         }
 
         .reset-btn {
-            background: #1f4e5c;
-            color: #ffddb0;
-            border: 1px solid #ffb469;
+            background: #4797a3;
+            color: #fff5e3;
+            box-shadow: 0 6px 0 #2f6f7a;
         }
 
         .reset-btn:hover {
-            background: #2e6b7c;
+            background: #62adba;
         }
 
         .action-row {
             display: flex;
             gap: 1rem;
-            margin-top: 1.4rem;
+            margin-top: 1.2rem;
         }
 
         .action-btn {
             flex: 1;
-            background: #00000066;
+            background: #e7bc7c;
             backdrop-filter: blur(5px);
-            border: 1px solid #ffc27a;
-            color: #ffeaC5;
-            padding: 0.6rem;
+            border: 1px solid #ffe2aa;
+            color: #2a2b1f;
+            padding: 0.7rem;
             border-radius: 44px;
-            font-weight: 500;
+            font-weight: 600;
             font-size: 0.85rem;
             cursor: pointer;
             transition: all 0.2s;
             text-align: center;
+            background: #fad48b;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
         }
 
         .action-btn:hover {
-            background: #ffb34755;
-            color: white;
+            background: #ffe2b0;
+            transform: scale(0.97);
         }
 
         @media (max-width: 550px) {
@@ -309,16 +353,20 @@
                 padding: 1rem;
             }
             .flip-card {
-                height: 380px;
+                height: 390px;
             }
             .front .question {
                 font-size: 1.2rem;
             }
             .back .answer-text {
-                font-size: 1.25rem;
+                font-size: 1.35rem;
             }
             .nav-btn {
                 padding: 0.5rem 1rem;
+                font-size: 0.85rem;
+            }
+            .header-area h1 {
+                font-size: 1.7rem;
             }
         }
     </style>
@@ -327,79 +375,79 @@
 
 <div class="quiz-single">
     <div class="header-area">
-        <h1>🇰🇿 2026 Конституциялық реформа</h1>
-        <div class="badge-date">📅 Жаңа Конституция · 1 шілде 2026</div>
+        <h1>🧩 Brainy Bunch: Riddles & Logic 🧠</h1>
+        <div class="badge-date">✨ 20 clever riddles | Smart & fun for students ✨</div>
         <div class="progress-info">
-            <span class="counter-text" id="currentIndexSpan">Карта 1 / 20</span>
-            <span class="status-badge" id="flipStatusSpan">🔒 Жабық</span>
+            <span class="counter-text" id="currentIndexSpan">Riddle 1 / 20</span>
+            <span class="status-badge" id="flipStatusSpan">🔒 Closed (question)</span>
         </div>
     </div>
 
-    <!-- 3D карта контейнері -->
+    <!-- 3D Flip Card -->
     <div class="flip-card-container" id="flipCardContainer">
         <div class="flip-card" id="flipCard">
             <div class="flip-card-inner">
-                <div class="front" id="frontSide">
-                    <div class="icon-q">📜❓</div>
-                    <h2>Сұрақ</h2>
-                    <div class="question" id="questionText">2026 жылғы Конституциялық реформа қалай қабылданды?</div>
-                    <div class="tap-hint">🖱️ Картаны түртіңіз → жауап</div>
+                <div class="front">
+                    <div class="icon-q">🔎❓</div>
+                    <h2>Riddle</h2>
+                    <div class="question" id="questionText">What has keys but can’t open locks?</div>
+                    <div class="tap-hint">👆 Tap the card → reveal answer!</div>
                 </div>
-                <div class="back" id="backSide">
-                    <div class="answer-icon">✨🇰🇿✨</div>
-                    <div class="answer-title">ДҰРЫС ЖАУАП</div>
-                    <div class="answer-text" id="answerText">Референдум арқылы</div>
-                    <div class="flip-back-hint">🔁 Қайта басыңыз — сұраққа оралу</div>
+                <div class="back">
+                    <div class="answer-icon">💡✨</div>
+                    <div class="answer-title">CORRECT ANSWER</div>
+                    <div class="answer-text" id="answerText">A piano</div>
+                    <div class="flip-back-hint">🔁 Tap again to go back to riddle</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Навигация және қосымша басқару -->
+    <!-- Navigation and extra controls -->
     <div class="nav-buttons">
-        <button class="nav-btn" id="prevBtn">◀ АЛДЫҢҒЫ</button>
-        <button class="nav-btn" id="nextBtn">КЕЛЕСІ ▶</button>
+        <button class="nav-btn" id="prevBtn">◀ PREVIOUS</button>
+        <button class="nav-btn" id="nextBtn">NEXT ▶</button>
     </div>
     <div class="action-row">
-        <button class="action-btn" id="resetFlipBtn">🔄 Картаны жабу</button>
-        <button class="action-btn" id="shuffleCardBtn">🎲 Кездейсоқ карта</button>
+        <button class="action-btn" id="resetFlipBtn">🔄 Close Card</button>
+        <button class="action-btn" id="shuffleCardBtn">🎲 Random Riddle</button>
     </div>
-    <div style="text-align: center; margin-top: 1.5rem; font-size: 0.7rem; color: #bdd4cf;">
-        💡 20 маңызды сұрақ | Әр картаны айналдыру үшін басыңыз
+    <div style="text-align: center; margin-top: 1.4rem; font-size: 0.7rem; color: #6f5b3e; font-weight: 500;">
+        💡 20 brain-teasers | Flip each card, think first, then check!
     </div>
 </div>
 
 <script>
-    // ---------- ДЕРЕКТЕР (20 сұрақ-жауап) ----------
+    // ---------- ALL 20 RIDDLES (EXACTLY AS YOU PROVIDED IN ENGLISH) ----------
     const quizData = [
-        { question: "2026 жылғы Конституциялық реформа қалай қабылданды?", answer: "Референдум арқылы" },
-        { question: "Референдум қашан өтті?", answer: "2026 жылғы 15 наурыз" },
-        { question: "Жаңа Конституция қашан күшіне енеді?", answer: "2026 жылғы 1 шілде" },
-        { question: "Жаңа Конституция неше бөлімнен тұрады?", answer: "11 бөлім" },
-        { question: "Неше баптан тұрады?", answer: "95 бап" },
-        { question: "Конституцияның қанша пайызы жаңартылды?", answer: "84%" },
-        { question: "Парламент жүйесінде қандай өзгеріс болды?", answer: "Бір палаталы жүйе енгізілді" },
-        { question: "Қандай жаңа лауазым енгізілді?", answer: "Вице-президент" },
-        { question: "Қандай жаңа орган құрылды?", answer: "Халық кеңесі" },
-        { question: "Конституция күні қай күнге ауыстырылды?", answer: "15 наурыз" },
-        { question: "Реформаның басты мақсаты қандай?", answer: "Демократияны күшейту, халықтың рөлін арттыру" },
-        { question: "Сот жүйесінде қандай өзгеріс болды?", answer: "Судьялардың тәуелсіздігі күшейтілді" },
-        { question: "Азаматтардың құқықтарына не өзгерді?", answer: "Құқықтары кеңейтілді" },
-        { question: "Конституциялық бақылау қалай өзгерді?", answer: "Конституциялық соттың рөлі күшейтілді" },
-        { question: "Мемлекеттік басқаруда қандай бағыт күшейтілді?", answer: "Әділеттілік пен ашықтық" },
-        { question: "Неліктен бір палаталы парламент енгізілді?", answer: "Заң қабылдау процесін жеңілдету үшін" },
-        { question: "Вице-президенттің негізгі рөлі қандай?", answer: "Президентке көмектесу және тұрақтылықты сақтау" },
-        { question: "«Халық кеңесінің» мақсаты қандай?", answer: "Халық пен билік арасындағы байланысты күшейту" },
-        { question: "Бұл реформа қандай басқару моделіне жақындатады?", answer: "Президенттік жүйені жаңғыртылған, демократиялық модельге" },
-        { question: "Бұл өзгерістер ел дамуына қалай әсер етеді?", answer: "Саяси тұрақтылықты нығайтады, халық сенімін арттырады" }
+        { question: "What has keys but can’t open locks?", answer: "A piano" },
+        { question: "I speak without a mouth and hear without ears. What am I?", answer: "An echo" },
+        { question: "What comes once in a minute, twice in a moment, but never in a thousand years?", answer: "The letter M" },
+        { question: "What gets wetter as it dries?", answer: "A towel" },
+        { question: "What has one eye but cannot see?", answer: "A needle" },
+        { question: "Which month has 28 days?", answer: "All months" },
+        { question: "What goes up but never comes down?", answer: "Your age" },
+        { question: "What has hands but cannot clap?", answer: "A clock" },
+        { question: "The more you take, the more you leave behind. What is it?", answer: "Footsteps" },
+        { question: "What begins with T, ends with T, and has tea inside?", answer: "Teapot" },
+        { question: "What can travel around the world while staying in one corner?", answer: "A stamp" },
+        { question: "If two’s company and three’s a crowd, what are four and five?", answer: "Nine" },
+        { question: "What has many teeth but cannot bite?", answer: "A comb" },
+        { question: "What room has no doors or windows?", answer: "Mushroom" },
+        { question: "What kind of tree can you carry in your hand?", answer: "A palm tree" },
+        { question: "What is full of holes but still holds water?", answer: "A sponge" },
+        { question: "What can you break without touching it?", answer: "A promise" },
+        { question: "What has a neck but no head?", answer: "A bottle" },
+        { question: "What word is always spelled incorrectly in the dictionary?", answer: "Incorrectly" },
+        { question: "What belongs to you but is used more by others?", answer: "Your name" }
     ];
 
-    // Ағымдағы индекс және картаның айналған күйі (flipped)
-    let currentIndex = 0;        // 0-ден бастап
-    let isFlipped = false;       // ағымдағы карта ашылған ба?
+    // Current index (0-based) and flip state
+    let currentIndex = 0;
+    let isFlipped = false;
 
-    // DOM элементтері
-    const flipCardContainer = document.getElementById('flipCard');
+    // DOM elements
+    const flipCard = document.getElementById('flipCard');
     const questionEl = document.getElementById('questionText');
     const answerEl = document.getElementById('answerText');
     const currentIndexSpan = document.getElementById('currentIndexSpan');
@@ -409,72 +457,55 @@
     const resetFlipBtn = document.getElementById('resetFlipBtn');
     const shuffleCardBtn = document.getElementById('shuffleCardBtn');
 
-    // Жаңарту функциясы: картаның мәтінін және прогресс, статус белгісін жаңартады, бірақ айналдыру күйін сақтайды.
+    // Update text content without changing flip state
     function updateCardContent() {
         const data = quizData[currentIndex];
         questionEl.innerText = data.question;
         answerEl.innerText = data.answer;
-        // прогресс индекс
-        currentIndexSpan.innerText = `Карта ${currentIndex+1} / ${quizData.length}`;
-        // статус (ашық/жабық) жазбаша түрде өзгерту
-        if (isFlipped) {
-            flipStatusSpan.innerHTML = '🔓 АШЫЛҒАН (жауап)';
-            flipStatusSpan.style.background = "#f7b05e88";
-        } else {
-            flipStatusSpan.innerHTML = '🔒 ЖАБЫҚ (сұрақ)';
-            flipStatusSpan.style.background = "#1f3e44cc";
-        }
+        currentIndexSpan.innerText = `Riddle ${currentIndex+1} / ${quizData.length}`;
     }
 
-    // Картаның физикалық күйін DOM-да көрсету (flip классын қосу/өшіру)
+    // Apply flip class based on isFlipped and update status badge
     function applyFlipState() {
         if (isFlipped) {
-            flipCardContainer.classList.add('flipped');
+            flipCard.classList.add('flipped');
+            flipStatusSpan.innerHTML = '🔓 OPEN (answer)';
+            flipStatusSpan.style.background = "#f7b05ecc";
         } else {
-            flipCardContainer.classList.remove('flipped');
-        }
-        // статус жазбасын жаңарту
-        if (isFlipped) {
-            flipStatusSpan.innerHTML = '🔓 АШЫЛҒАН (жауап)';
-            flipStatusSpan.style.background = "#f7b05e88";
-        } else {
-            flipStatusSpan.innerHTML = '🔒 ЖАБЫҚ (сұрақ)';
-            flipStatusSpan.style.background = "#1f3e44cc";
+            flipCard.classList.remove('flipped');
+            flipStatusSpan.innerHTML = '🔒 CLOSED (riddle)';
+            flipStatusSpan.style.background = "#ffcd87";
         }
     }
 
-    // Толық жаңарту (мәтін + күй)
+    // Fully refresh current card: text + flip state
     function refreshCurrentCard() {
         updateCardContent();
         applyFlipState();
     }
 
-    // Картаны айналдыру (toggle)
+    // Toggle flip (open/close)
     function toggleFlip() {
         isFlipped = !isFlipped;
         applyFlipState();
-        // Жеңіл діріл эффекті
-        const cardInner = document.querySelector('.flip-card-inner');
-        if(cardInner) {
-            cardInner.style.transform = isFlipped ? 'rotateY(180deg)' : '';
-        }
+        // tiny micro animation
+        const inner = document.querySelector('.flip-card-inner');
+        if (inner) inner.style.transform = isFlipped ? 'rotateY(180deg)' : '';
     }
 
-    // Келесі картаға өту (егер соңғы болса, басына оралады)
+    // Next card (wrap around)
     function nextCard() {
-        // алдыңғы картаның flipped күйін "жабық" етіп бастаймыз (жаңа картаға өткенде әрқашан сұрақ көрінеді)
         if (currentIndex + 1 < quizData.length) {
             currentIndex++;
         } else {
-            currentIndex = 0;   // цикл
+            currentIndex = 0;
         }
-        isFlipped = false;   // әрбір ауысқанда карта жабық күйде (тек сұрақ)
+        isFlipped = false;   // new card starts closed (question side)
         refreshCurrentCard();
-        // қосымша визуалды серпіліс
         animateCardTransition();
     }
 
-    // Алдыңғы карта
+    // Previous card (wrap around)
     function prevCard() {
         if (currentIndex - 1 >= 0) {
             currentIndex--;
@@ -486,77 +517,68 @@
         animateCardTransition();
     }
 
-    // Кездейсоқ карта
+    // Random card
     function randomCard() {
-        const newIndex = Math.floor(Math.random() * quizData.length);
-        if (newIndex === currentIndex) {
-            // егер бірдей болса да, бәрібір жаңартамыз, бірақ flipped-ты жабамыз
-            currentIndex = newIndex;
-        } else {
-            currentIndex = newIndex;
+        let newIndex = Math.floor(Math.random() * quizData.length);
+        while (newIndex === currentIndex && quizData.length > 1) {
+            newIndex = Math.floor(Math.random() * quizData.length);
         }
+        currentIndex = newIndex;
         isFlipped = false;
         refreshCurrentCard();
         animateCardTransition(true);
     }
 
-    // Картаны жабу (егер ашық болса ғана жабады)
+    // Force close card (set to question side)
     function closeCard() {
         if (isFlipped) {
             isFlipped = false;
             applyFlipState();
-            // кішкене анимациялық нәзіктік
-            const innerCard = document.querySelector('.flip-card-inner');
-            if(innerCard) innerCard.style.transform = '';
         } else {
-            // егер жабық болса, ештеңе өзгермейді, бірақ хабарласудың қажеті жоқ
-            // опция: қысқаша эфект беру
-            const cardWrap = document.getElementById('flipCard');
-            if(cardWrap) {
-                cardWrap.style.transform = "scale(0.99)";
-                setTimeout(() => { if(cardWrap) cardWrap.style.transform = ""; }, 150);
+            // playful bump if already closed
+            const container = document.querySelector('.flip-card');
+            if (container) {
+                container.style.transform = "scale(0.98)";
+                setTimeout(() => { if(container) container.style.transform = ""; }, 150);
             }
         }
     }
 
-    // Карта ауысқандағы әсер
+    // Nice little scale animation when switching cards
     function animateCardTransition(isRandom = false) {
         const container = document.querySelector('.flip-card');
         if (container) {
-            container.style.transform = "scale(0.98)";
+            container.style.transform = "scale(0.97)";
             setTimeout(() => {
                 if (container) container.style.transform = "scale(1)";
-            }, 150);
+            }, 130);
         }
         if (isRandom) {
             const badge = document.querySelector('.counter-text');
             if(badge) {
                 badge.style.opacity = '0.7';
-                setTimeout(() => { if(badge) badge.style.opacity = '1'; }, 200);
+                setTimeout(() => { if(badge) badge.style.opacity = '1'; }, 180);
             }
         }
     }
 
-    // Картаны басу арқылы айналдыру (клик)
-    function onCardClick() {
-        toggleFlip();
-    }
-
-    // Инициализация және event listener
+    // Event binding and keyboard controls
     function init() {
         refreshCurrentCard();
-        // карта клик
+
+        // Click on card to flip
         const cardElem = document.getElementById('flipCard');
         if (cardElem) {
-            cardElem.addEventListener('click', onCardClick);
+            cardElem.addEventListener('click', toggleFlip);
         }
-        // кнопкалар
+
+        // Buttons
         if (prevBtn) prevBtn.addEventListener('click', prevCard);
         if (nextBtn) nextBtn.addEventListener('click', nextCard);
         if (resetFlipBtn) resetFlipBtn.addEventListener('click', closeCard);
         if (shuffleCardBtn) shuffleCardBtn.addEventListener('click', randomCard);
-        
-        // қосымша: пернелермен басқару (оңға/солға)
+
+        // Keyboard shortcuts: left/right arrows for navigation, up/down for flip
         window.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowRight') {
                 e.preventDefault();
@@ -567,11 +589,14 @@
             } else if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
                 e.preventDefault();
                 toggleFlip();
+            } else if (e.key === ' ' || e.key === 'Space') {
+                e.preventDefault();
+                toggleFlip();
             }
         });
     }
 
-    // Бастау
+    // Start the game
     init();
 </script>
 </body>
